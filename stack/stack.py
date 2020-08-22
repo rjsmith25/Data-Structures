@@ -30,7 +30,7 @@ return elements in Last In First Out order.
 #         self.size -= 1
 #         return element
 
-# Stack class using linked list as the underlying storage structure
+#Stack class using linked list as the underlying storage structure
 class Node:
     def __init__(self,value = None, next = None):
         self.value = value
