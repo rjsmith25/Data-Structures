@@ -1,7 +1,7 @@
 """
-Binary search trees are a data structure that enforce an ordering over 
-the data they store. That ordering in turn makes it a lot more efficient 
-at searching for a particular piece of data in the tree. 
+Binary search trees are a data structure that enforce an ordering over
+the data they store. That ordering in turn makes it a lot more efficient
+at searching for a particular piece of data in the tree.
 
 This part of the project comprises two days:
 1. Implement the methods `insert`, `contains`, `get_max`, and `for_each`
@@ -17,20 +17,60 @@ class BSTNode:
 
     # Insert the given value into the tree
     def insert(self, value):
-        pass
+        if value < self.value:
+            if not self.left:
+                self.left = BSTNode(value)
+                return
+            self.left.insert(value)
+        else:
+            if not self.right:
+                self.right = BSTNode(value)
+                return
+            self.right.insert(value)
 
     # Return True if the tree contains the value
     # False if it does not
     def contains(self, target):
-        pass
+        root = self
+        if root != None:
+            is_found = self._find(target, root)
+            if is_found:
+                return True
+            return False
+        else:
+            return None
+
+    def _find(self, target, curr_node):
+        if target > curr_node.value and curr_node.right:
+            return self._find(target,curr_node.right)
+        elif target < curr_node.value and curr_node.left:
+            return self._find(target, curr_node.left)
+        if target == curr_node.value:
+            return True
+
+
 
     # Return the maximum value found in the tree
     def get_max(self):
-        pass
+        root = self
+        list_of_values = self._preorder_traveral(root, [])
+        return max(list_of_values)
+
+    def _preorder_traveral(self, start, traversal):
+        if start != None:
+            traversal.append(start.value)
+            traversal = self._preorder_traveral(start.left, traversal)
+            traversal = self._preorder_traveral(start.right, traversal)
+        return traversal
+
 
     # Call the function `fn` on the value of each node
     def for_each(self, fn):
-        pass
+        root = self
+        list_of_values = self._preorder_traveral(root, [])
+        for i in range(0,len(list_of_values)):
+            list_of_values[i] = fn(list_of_values[i])
+        return list_of_values
 
     # Part 2 -----------------------
 
@@ -60,6 +100,12 @@ class BSTNode:
     def post_order_dft(self):
         pass
 
+    def in_order_dft(self):
+        pass
+
+
+
+
 """
 This code is necessary for testing the `print` methods
 """
@@ -82,4 +128,4 @@ bst.pre_order_dft()
 print("in order")
 bst.in_order_dft()
 print("post order")
-bst.post_order_dft()  
+bst.post_order_dft()
